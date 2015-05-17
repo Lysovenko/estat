@@ -53,29 +53,3 @@ def run():
     with ouf:
         for i in result:
             ouf.write('\t'.join([str(j) for j in i]) + '\n')
-
-
-# if __name__ == "__main__":
-#     options, in_names = parse_options()
-#     larr = []
-#     for name in in_names:
-#         with open(name) as f:
-#             lines = f.readlines()
-#             if options.rm_com:
-#                 lines = [i for i in lines if not i.startswith('#')]
-#             larr.append(lines)
-#     if len(larr) < 2:
-#         exit(1)
-#     lmax = max([len(i) for i in larr])
-#     allsame = all([len(i) == lmax for i in larr])
-#     if not allsame:
-#         exit(2)
-#     if options.ofilename:
-#         ouf = open(options.ofilename, "w")
-#     else:
-#         from sys import stdout
-#         ouf = stdout
-#     with ouf:
-#         for i in range(lmax):
-#             ouf.write('\t'.join([j[i].strip() for j in larr]))
-#             ouf.write('\n')
