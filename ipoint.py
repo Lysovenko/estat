@@ -33,6 +33,12 @@ def parse_options():
         action="store_true", default=False, help="calculate dispersion")
     parser.add_option(
         "-c", "--column", type=int, help="selected column")
+    parser.add_option(
+        "--lin-reg", action="store_true", default=False,
+        dest="lin_regr", help="linear regresion")
+    parser.add_option(
+        "--caver", action="store_true", default=False,
+        dest="col_aver", help="column average")
     return parser.parse_args()
 
 
