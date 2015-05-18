@@ -31,6 +31,8 @@ def parse_options():
     parser.add_option(
         "-d", "--dispersion", dest="dispersion",
         action="store_true", default=False, help="calculate dispersion")
+    parser.add_option(
+        "-c", "--column", type=int, help="selected column")
     return parser.parse_args()
 
 
@@ -53,3 +55,7 @@ def run():
     with ouf:
         for i in result:
             ouf.write('\t'.join([str(j) for j in i]) + '\n')
+
+
+if __name__ == '__main__':
+    print(parse_options())
