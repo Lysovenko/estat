@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # Copyright 2015 Serhiy Lysovenko
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,6 +52,9 @@ def run():
     if options.dispersion:
         from calc1d import calc_dispersion
         result = calc_dispersion(in_names)
+    if options.lin_regr:
+        from colcalc import lin_stat
+        pass
     if options.ofilename:
         ouf = open(options.ofilename, "w")
     else:
