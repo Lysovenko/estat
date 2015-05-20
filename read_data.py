@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # Copyright 2015 Serhiy Lysovenko
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +17,7 @@ from __future__ import print_function
 
 
 def read_dat(filename, all_same=True):
+    "Read data from file and save it to 2d array"
     datar = []
     with open(filename) as fp:
         for line in fp:
