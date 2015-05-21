@@ -31,7 +31,7 @@ def parse_options():
         "-d", "--dispersion", dest="dispersion",
         action="store_true", default=False, help="calculate dispersion")
     parser.add_option(
-        "-c", "--column", type=int, help="selected column")
+        "-c", "--column", type=int, help="selected column", default=0)
     parser.add_option(
         "--lin-reg", action="store_true", default=False,
         dest="lin_regr", help="linear regresion")
@@ -54,7 +54,7 @@ def run():
         result = calc_dispersion(in_names)
     if options.lin_regr:
         from colcalc import lin_stat
-        pass
+        result = lin_stat(in_names, options.column)
     if options.ofilename:
         ouf = open(options.ofilename, "w")
     else:

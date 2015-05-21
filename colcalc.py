@@ -16,6 +16,7 @@
 import sys
 import os
 import math
+from read_data import read_dat
 
 
 def expected_value(f, col):
@@ -59,18 +60,18 @@ def med_ariph(f, col):
     print(M_, S2_, S_, N, '|', M, M2)
 
 
-def lin_stat(f, col):
+def lin_stat(fnames, col):
+    ipoints = []
+    for fname in fnames:
+        ipoints += read_dat(fname)
     N = 0
     X = 0.
     Y = 0.
     X2 = 0.
     XY = 0.
-    for line in f:
-        if line[0] == '#':
-            continue
-        spl = line.split()
-        x = float(spl[0])
-        y = float(spl[col])
+    for line in ipoints:
+        x = line[0]
+        y = line[col]
         N += 1
         X += x
         Y += y
@@ -79,4 +80,4 @@ def lin_stat(f, col):
     D = X2 * N - X ** 2
     a = (XY * N - Y * X) / D
     b = (X2 * Y - XY * X) / D
-    print "%g *x + %g" % (a, b)
+    return [[0, b], [1, a]]
