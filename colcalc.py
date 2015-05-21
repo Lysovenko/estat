@@ -41,7 +41,7 @@ def expected_value(f, col):
             I += (y + yp) * (x - xp) / 2.
             xp = x
             yp = y
-    print("%g\t%g" % (M/I, D/I - (M/I) ** 2))
+    print("%g\t%g" % (M / I, D / I - (M / I) ** 2))
 
 
 def med_ariph(f, col):
@@ -54,7 +54,7 @@ def med_ariph(f, col):
             N += 1
             M += i
             M2 += i * i
-    M_ = M/N
+    M_ = M / N
     S2_ = M2 / N - M_ ** 2
     S_ = math.sqrt(S2_)
     print(M_, S2_, S_, N, '|', M, M2)

@@ -14,16 +14,28 @@
 
 
 from __future__ import print_function
+from sys import stdin
 
 
 def read_dat(filename, all_same=True):
     "Read data from file and save it to 2d array"
     datar = []
-    with open(filename) as fp:
+    open_file = filename != "-"
+    if open_file:
+        try:
+            fp = open(filename)
+        except Exception:
+            return datar
+    else:
+        fp = stdin
+    try:
         for line in fp:
             if line.startswith('#'):
                 continue
             datar.append([float(i) for i in line.split()])
+    finally:
+        if open_file:
+            fp.close()
     if all_same and datar:
         l0 = len(datar[0])
         if not all([len(i) == l0 for i in datar]):
