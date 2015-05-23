@@ -36,6 +36,9 @@ def parse_options():
         "--lin-reg", action="store_true", default=False,
         dest="lin_regr", help="linear regresion")
     parser.add_option(
+        "--polinomial", default=None, dest="polinomial",
+        help="Polinomial fit", type=int)
+    parser.add_option(
         "--caver", action="store_true", default=False,
         dest="col_aver", help="column average")
     return parser.parse_args()
@@ -55,6 +58,9 @@ def run():
     if options.lin_regr:
         from colcalc import lin_stat
         result = lin_stat(in_names, options.column)
+    if options.polinomial:
+        from colcalc import poly_fit
+        result = poly_fit(in_names, options.column, options.polinomial)
     if options.ofilename:
         ouf = open(options.ofilename, "w")
     else:

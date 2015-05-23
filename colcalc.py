@@ -81,3 +81,13 @@ def lin_stat(fnames, col):
     a = (XY * N - Y * X) / D
     b = (X2 * Y - XY * X) / D
     return [[0, b], [1, a]]
+
+
+def poly_fit(fnames, col, deg):
+    import numpy as np
+    ipoints = []
+    for fname in fnames:
+        ipoints += read_dat(fname)
+    arr = np.array(ipoints).transpose()
+    res = np.polyfit(arr[0], arr[col], deg)
+    return enumerate(reversed(res))
