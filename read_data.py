@@ -25,33 +25,33 @@ class InputData:
         self.current += 1
         if self.current == len(self.files):
             raise StopIteration()
-        return read_dat(self.files[self.current])
+        return self.read_dat(self.files[self.current])
 
     def __iter__(self):
         return self
 
-
-def read_dat(filename, all_same=True):
-    "Read data from file and save it to 2d array"
-    datar = []
-    open_file = filename != "-"
-    if open_file:
-        try:
-            fp = open(filename)
-        except Exception:
-            return datar
-    else:
-        fp = stdin
-    try:
-        for line in fp:
-            if line.startswith('#'):
-                continue
-            datar.append([float(i) for i in line.split()])
-    finally:
+    @staticmethod
+    def read_dat(filename, all_same=True):
+        "Read data from file and save it to 2d array"
+        datar = []
+        open_file = filename != "-"
         if open_file:
-            fp.close()
-    if all_same and datar:
-        l0 = len(datar[0])
-        if not all([len(i) == l0 for i in datar]):
-            raise IndexError("Not all lines are the same")
-    return datar
+            try:
+                fp = open(filename)
+            except Exception:
+                return datar
+        else:
+            fp = stdin
+        try:
+            for line in fp:
+                if line.startswith("#"):
+                    continue
+                datar.append([float(i) for i in line.split()])
+        finally:
+            if open_file:
+                fp.close()
+        if all_same and datar:
+            l0 = len(datar[0])
+            if not all([len(i) == l0 for i in datar]):
+                raise IndexError("Not all lines are the same")
+        return datar
