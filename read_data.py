@@ -13,8 +13,22 @@
 # limitations under the License.
 
 
-from __future__ import print_function
 from sys import stdin
+
+
+class InputData:
+    def __init__(self, filenames):
+        self.files = filenames
+        self.current = -1
+
+    def __next__(self):
+        self.current += 1
+        if self.current == len(self.files):
+            raise StopIteration()
+        return read_dat(self.files[self.current])
+
+    def __iter__(self):
+        return self
 
 
 def read_dat(filename, all_same=True):

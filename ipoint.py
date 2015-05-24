@@ -14,6 +14,7 @@
 "Input point"
 
 from sys import stdout
+from read_data import InputData
 
 
 def parse_options():
@@ -47,20 +48,21 @@ def parse_options():
 def run():
     options, in_names = parse_options()
     if not in_names:
-        raise ValueError('no input names')
+        raise ValueError("It is no input names")
+    idata = InputData(in_names)
     result = None
     if options.average:
         from calc1d import calc_med_ariph
-        result = calc_med_ariph(in_names)
+        result = calc_med_ariph(idata)
     if options.dispersion:
         from calc1d import calc_dispersion
-        result = calc_dispersion(in_names)
+        result = calc_dispersion(idata)
     if options.lin_regr:
         from colcalc import lin_stat
-        result = lin_stat(in_names, options.column)
+        result = lin_stat(idata, options.column)
     if options.polinomial:
         from colcalc import poly_fit
-        result = poly_fit(in_names, options.column, options.polinomial)
+        result = poly_fit(idata, options.column, options.polinomial)
     if options.ofilename:
         ouf = open(options.ofilename, "w")
     else:

@@ -15,15 +15,14 @@
 
 
 import numpy as np
-from read_data import read_dat
 
 
-def calc_med_ariph(in_names):
+def calc_med_ariph(idata):
     shape = None
     result = None
     ntored = 0
-    for name in in_names:
-        dat = np.array(read_dat(name))
+    for data in idata:
+        dat = np.array(data)
         if shape is None:
             shape = dat.shape
             result = dat
@@ -36,13 +35,13 @@ def calc_med_ariph(in_names):
     return result
 
 
-def calc_dispersion(in_names):
+def calc_dispersion(idata):
     shape = None
     result1 = None
     result2 = None
     ntored = 0
-    for name in in_names:
-        dat = np.array(read_dat(name))
+    for data in idata:
+        dat = np.array(data)
         if shape is None:
             shape = dat.shape
             result1 = dat ** 2

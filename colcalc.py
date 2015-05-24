@@ -16,7 +16,6 @@
 import sys
 import os
 import math
-from read_data import read_dat
 
 
 def expected_value(f, col):
@@ -60,10 +59,10 @@ def med_ariph(f, col):
     print(M_, S2_, S_, N, '|', M, M2)
 
 
-def lin_stat(fnames, col):
+def lin_stat(idata, col):
     ipoints = []
-    for fname in fnames:
-        ipoints += read_dat(fname)
+    for data in idata:
+        ipoints += data
     N = 0
     X = 0.
     Y = 0.
@@ -83,11 +82,11 @@ def lin_stat(fnames, col):
     return [[0, b], [1, a]]
 
 
-def poly_fit(fnames, col, deg):
+def poly_fit(idata, col, deg):
     import numpy as np
     ipoints = []
-    for fname in fnames:
-        ipoints += read_dat(fname)
+    for data in idata:
+        ipoints += data
     arr = np.array(ipoints).transpose()
     res = np.polyfit(arr[0], arr[col], deg)
     return enumerate(reversed(res))
