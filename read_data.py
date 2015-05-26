@@ -18,14 +18,14 @@ from sys import stdin
 
 class InputData:
     def __init__(self, filenames):
-        self.files = filenames
+        self.filenames = filenames
         self.current = -1
 
     def __next__(self):
         self.current += 1
-        if self.current == len(self.files):
+        if self.current == len(self.filenames):
             raise StopIteration()
-        return self.read_dat(self.files[self.current])
+        return self.read_dat(self.filenames[self.current])
 
     def __iter__(self):
         return self
