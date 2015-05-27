@@ -59,7 +59,7 @@ def med_ariph(f, col):
     print(M_, S2_, S_, N, '|', M, M2)
 
 
-def lin_stat(idata, col):
+def lin_stat(idata, col_x, col_y):
     ipoints = []
     for data in idata:
         ipoints += data
@@ -69,8 +69,8 @@ def lin_stat(idata, col):
     X2 = 0.
     XY = 0.
     for line in ipoints:
-        x = line[0]
-        y = line[col]
+        x = line[col_x]
+        y = line[col_y]
         N += 1
         X += x
         Y += y
@@ -82,11 +82,11 @@ def lin_stat(idata, col):
     return [[0, b], [1, a]]
 
 
-def poly_fit(idata, col, deg):
+def poly_fit(idata, col_x, col_y, deg):
     import numpy as np
     ipoints = []
     for data in idata:
         ipoints += data
     arr = np.array(ipoints).transpose()
-    res = np.polyfit(arr[0], arr[col], deg)
+    res = np.polyfit(arr[col_x], arr[col_y], deg)
     return enumerate(reversed(res))
