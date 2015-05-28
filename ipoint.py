@@ -60,7 +60,7 @@ def run():
         result = calc_med_ariph(idata)
     if options.dispersion:
         from calc1d import calc_dispersion
-        result = calc_dispersion(idata)
+        result = calc_dispersion(idata, options.col_x - 1)
     if options.lin_regr:
         from colcalc import lin_stat
         result = lin_stat(idata, options.col_x - 1, options.col_y - 1)
