@@ -27,6 +27,7 @@ def lin_stat(idata, col_x, col_y):
     Y = 0.
     X2 = 0.
     XY = 0.
+    Y2 = 0.
     for line in ipoints:
         x = line[col_x]
         y = line[col_y]
@@ -35,10 +36,16 @@ def lin_stat(idata, col_x, col_y):
         Y += y
         XY += x * y
         X2 += x ** 2
+        Y2 += y ** 2
     D = X2 * N - X ** 2
     a = (XY * N - Y * X) / D
     b = (X2 * Y - XY * X) / D
-    return [[0, b], [1, a]]
+    if N > 2:
+        chi2 = (a ** 2 * X2 + 2 * a * b * X - 2 * a * XY +
+                N * b ** 2 - 2 * b * Y + Y2) / (N - 2)
+    else:
+        chi2 = None
+    return [[0, b], [1, a], ['#Chi^2', chi2]]
 
 
 def poly_fit(idata, col_x, col_y, deg):
