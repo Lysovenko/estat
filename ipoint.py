@@ -18,65 +18,66 @@ from read_data import InputData
 
 
 def parse_options():
-    from optparse import OptionParser
-    parser = OptionParser(usage="%prog [OPTIONS] <FILENAME(S)>",
-                          version="%prog 0.1")
-    parser.disable_interspersed_args()
-    parser.add_option(
+    from argparse import ArgumentParser
+    parser = ArgumentParser(description="Calculates experimental statistics.")
+    parser.add_argument("--version", action="version", version="%(prog)s 0.1")
+    parser.add_argument(
         "-o", "--out", dest="ofilename",
         help="write result to to FILE", metavar="FILE", default=None)
-    parser.add_option(
+    parser.add_argument(
         "-a", "--average", dest="average",
         action="store_true", default=False, help="calculate average")
-    parser.add_option(
+    parser.add_argument(
         "-d", "--dispersion", dest="dispersion",
         action="store_true", default=False, help="calculate dispersion")
-    parser.add_option(
+    parser.add_argument(
         "-c", "--column-y", type=int, help="column with y values", default=2,
         dest="col_y")
-    parser.add_option(
+    parser.add_argument(
         "--column-x", type=int, help="column with x values", default=1,
         dest="col_x")
-    parser.add_option(
+    parser.add_argument(
         "--lin-reg", action="store_true", default=False,
         dest="lin_regr", help="linear regresion")
-    parser.add_option(
+    parser.add_argument(
         "--polinomial", default=None, dest="polinomial",
         help="Polinomial fit", type=int)
-    parser.add_option(
+    parser.add_argument(
         "--caver", action="store_true", default=False,
         dest="col_aver", help="column average")
+    parser.add_argument("files", metavar="File", type=str, nargs="+",
+                        help="Files to process")
     return parser.parse_args()
 
 
 def run():
-    options, in_names = parse_options()
-    if not in_names:
+    args = parse_options()
+    if not args.files:
         raise ValueError("It is no input names")
-    idata = InputData(in_names)
+    idata = InputData(args.files)
     result = None
-    if options.average:
+    if args.average:
         from calc1d import calc_med_ariph
         result = calc_med_ariph(idata)
-    if options.dispersion:
+    if args.dispersion:
         from calc1d import calc_dispersion
-        result = calc_dispersion(idata, options.col_x - 1)
-    if options.lin_regr:
+        result = calc_dispersion(idata, args.col_x - 1)
+    if args.lin_regr:
         from colcalc import lin_stat
-        result = lin_stat(idata, options.col_x - 1, options.col_y - 1)
-    if options.polinomial:
+        result = lin_stat(idata, args.col_x - 1, args.col_y - 1)
+    if args.polinomial:
         from colcalc import poly_fit
         result = poly_fit(
-            idata, options.col_x - 1, options.col_y - 1, options.polinomial)
-    if options.ofilename:
-        ouf = open(options.ofilename, "w")
+            idata, args.col_x - 1, args.col_y - 1, args.polinomial)
+    if args.ofilename:
+        ouf = open(args.ofilename, "w")
     else:
         from sys import stdout
         ouf = stdout
     with ouf:
         for i in result:
-            ouf.write('\t'.join([str(j) for j in i]) + '\n')
+            ouf.write("\t".join([str(j) for j in i]) + "\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(parse_options())
