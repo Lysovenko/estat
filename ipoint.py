@@ -41,7 +41,7 @@ def parse_options():
         dest="lin_regr", help="linear regresion")
     parser.add_argument(
         "--polinomial", default=None, dest="polinomial",
-        help="Polinomial fit", type=int)
+        help="Polinomial fit", type=int, metavar="degree")
     parser.add_argument(
         "--caver", action="store_true", default=False,
         dest="col_aver", help="column average")
@@ -52,8 +52,6 @@ def parse_options():
 
 def run():
     args = parse_options()
-    if not args.files:
-        raise ValueError("It is no input names")
     idata = InputData(args.files)
     result = None
     if args.average:
@@ -76,7 +74,7 @@ def run():
         ouf = stdout
     with ouf:
         for i in result:
-            ouf.write("\t".join([str(j) for j in i]) + "\n")
+            ouf.write("\t".join(map(str, i)) + "\n")
 
 
 if __name__ == "__main__":
