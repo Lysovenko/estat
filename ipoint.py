@@ -70,7 +70,6 @@ def run():
     if args.ofilename:
         ouf = open(args.ofilename, "w")
     else:
-        from sys import stdout
         ouf = stdout
     with ouf:
         for i in result:
