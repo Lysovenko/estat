@@ -74,7 +74,3 @@ def run():
     with ouf:
         for i in result:
             ouf.write("\t".join(map(str, i)) + "\n")
-
-
-if __name__ == "__main__":
-    print(parse_options())
