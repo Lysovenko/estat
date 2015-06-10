@@ -25,7 +25,7 @@ class InputData:
 
     def __next__(self):
         data = []
-        while not data: 
+        while not data:
             if not self.split or self.previous == 0:
                 self.cur_name += 1
                 if self.cur_name == len(self.filenames):
@@ -69,7 +69,7 @@ class InputData:
             if line.startswith("#"):
                 continue
             if line.isspace():
-                empty +=1
+                empty += 1
                 if self.split and empty >= 2:
                     if fp.seekable():
                         set_end = fp.tell()
