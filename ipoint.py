@@ -38,6 +38,9 @@ def parse_options():
     parser.add_argument(
         "--column-x", type=int, help="column with x values", default=1,
         dest="col_x")
+    parser.add_argument(
+        "-s", "--split", dest="split", action="store_true", default=False,
+        help="split single file")
     parser.add_argument("files", metavar="File", type=str, nargs="+",
                         help="Files to process")
     return parser.parse_args()
@@ -45,7 +48,7 @@ def parse_options():
 
 def run():
     args = parse_options()
-    idata = InputData(args.files)
+    idata = InputData(args.files, args.split)
     result = None
     if args.mode in {"aver", "average"}:
         from calc1d import calc_med_ariph

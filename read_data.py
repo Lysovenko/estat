@@ -13,40 +13,43 @@
 # limitations under the License.
 
 
-from sys import stdin
+from sys import stdin, stderr
 
 
 class InputData:
-    def __init__(self, filenames):
+    def __init__(self, filenames, split):
         self.filenames = filenames
-        self.current = -1
+        self.cur_name = -1
+        self.previous = 0
+        self.split = split
 
     def __next__(self):
-        self.current += 1
-        if self.current == len(self.filenames):
-            raise StopIteration()
-        return self.read_dat(self.filenames[self.current])
+        data = []
+        while not data: 
+            if not self.split or self.previous == 0:
+                self.cur_name += 1
+                if self.cur_name == len(self.filenames):
+                    raise StopIteration()
+            data = self.read_dat(self.filenames[self.cur_name])
+        return data
 
     def __iter__(self):
         return self
 
-    @staticmethod
-    def read_dat(filename, all_same=True):
+    def read_dat(self, filename, all_same=True):
         "Read data from file and save it to 2d array"
         datar = []
         open_file = filename != "-"
         if open_file:
             try:
                 fp = open(filename)
-            except Exception:
+            except IOError as err:
+                stderr.write("Can't open %s: %s\n" % (filename, err.strerror))
                 return datar
         else:
             fp = stdin
         try:
-            for line in fp:
-                if line.startswith("#"):
-                    continue
-                datar.append([float(i) for i in line.split()])
+            datar = self.read_lines(fp)
         finally:
             if open_file:
                 fp.close()
@@ -54,4 +57,26 @@ class InputData:
             l0 = len(datar[0])
             if not all([len(i) == l0 for i in datar]):
                 raise IndexError("Not all lines are the same")
+        return datar
+
+    def read_lines(self, fp):
+        datar = []
+        empty = 0
+        set_end = 0
+        if self.split and fp.seekable():
+            fp.seek(self.previous)
+        for line in iter(fp.readline, ""):
+            if line.startswith("#"):
+                continue
+            if line.isspace():
+                empty +=1
+                if self.split and empty >= 2:
+                    if fp.seekable():
+                        set_end = fp.tell()
+                        break
+                continue
+            else:
+                empty = 0
+            datar.append([float(i) for i in line.split()])
+        self.previous = set_end
         return datar
