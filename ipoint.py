@@ -24,7 +24,7 @@ def parse_options():
         "-m", "--mode", dest="mode", type=str, required=True, metavar="Mode",
         choices={"aver", "average", "disp", "dispersion", "lr",
                  "linear-regresion", "pol", "polinomial", "caver",
-                 "column-average"}, help="Calculation mode")
+                 "column-average", "chi2"}, help="Calculation mode")
     parser.add_argument("--version", action="version", version="%(prog)s 0.1")
     parser.add_argument(
         "-o", "--out", dest="ofilename",
@@ -63,6 +63,9 @@ def run():
         from colcalc import poly_fit
         result = poly_fit(
             idata, args.col_x - 1, args.col_y - 1, args.degree)
+    elif args.mode == "chi2":
+        from colcalc import chi2
+        result = [[chi2(idata, args.col_x - 1, args.col_y - 1)]]
     if args.ofilename:
         ouf = open(args.ofilename, "w")
     else:

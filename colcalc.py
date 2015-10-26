@@ -56,3 +56,14 @@ def poly_fit(idata, col_x, col_y, deg):
     arr = np.array(ipoints).transpose()
     res = np.polyfit(arr[col_x], arr[col_y], deg)
     return enumerate(reversed(res))
+
+
+def chi2(idata, col_x, col_y):
+    import numpy as np
+    ipoints = []
+    for data in idata:
+        ipoints += data
+    arr = np.array(ipoints).transpose()
+    mul = arr[col_x] - arr[col_y]
+    mul = mul ** 2
+    return mul.sum() / len(mul)
