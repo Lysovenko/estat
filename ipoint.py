@@ -14,7 +14,7 @@
 "Input point"
 
 from sys import stdout
-from read_data import InputData
+from .read_data import InputData
 
 
 def parse_options():
@@ -51,20 +51,20 @@ def run():
     idata = InputData(args.files, args.split)
     result = None
     if args.mode in {"aver", "average"}:
-        from calc1d import calc_med_ariph
+        from .calc1d import calc_med_ariph
         result = calc_med_ariph(idata)
     elif args.mode in {"disp", "dispersion"}:
-        from calc1d import calc_dispersion
+        from .calc1d import calc_dispersion
         result = calc_dispersion(idata, args.col_x - 1)
     elif args.mode in {"lr", "linear-regresion"}:
-        from colcalc import lin_stat
+        from .colcalc import lin_stat
         result = lin_stat(idata, args.col_x - 1, args.col_y - 1)
     elif args.mode in {"pol", "polinomial"}:
-        from colcalc import poly_fit
+        from .colcalc import poly_fit
         result = poly_fit(
             idata, args.col_x - 1, args.col_y - 1, args.degree)
     elif args.mode == "chi2":
-        from colcalc import chi2
+        from .colcalc import chi2
         result = [[chi2(idata, args.col_x - 1, args.col_y - 1)]]
     if args.ofilename:
         ouf = open(args.ofilename, "w")
